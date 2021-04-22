@@ -1,19 +1,22 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class CardWithOverlay extends StatelessWidget {
   CardWithOverlay({this.type});
   final String type;
+  final Random random = new Random();
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
+      borderRadius: BorderRadius.circular(type == "big" ? 12.0 : 8.0),
       child: Stack(
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           Image.asset(
-            'assets/moletom1.webp',
+            'assets/image${random.nextInt(4)}.webp',
             height: screenSize.height * (type == "big" ? 0.4 : 0.22),
             width: screenSize.width * (type == "big" ? 0.93 : 0.42),
             fit: BoxFit.cover,
@@ -30,7 +33,7 @@ class CardWithOverlay extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Moletom New York Tie Dye',
+                    'Nome da Peça de Roupa',
                     style: TextStyle(
                       fontSize: type == "big" ? 25.0 : 20,
                       fontWeight: FontWeight.w300,

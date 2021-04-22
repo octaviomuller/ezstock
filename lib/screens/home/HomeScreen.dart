@@ -1,4 +1,4 @@
-// import 'package:ezstock/screens/home/sections/LastSold.dart';
+import 'package:ezstock/screens/home/sections/LastSold.dart';
 import 'package:ezstock/screens/home/sections/MostSold.dart';
 import 'package:flutter/material.dart';
 
@@ -12,16 +12,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: SingleChildScrollView(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          //TODO: Make all hard coded number relative to screen size
           children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 12.0),
-                  child: MostSold(),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0, left: 12.0),
+              child: MostSold(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 32.0, left: 12.0),
+              child: LastSold(),
             ),
           ],
         ),
