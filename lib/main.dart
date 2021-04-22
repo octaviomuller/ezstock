@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ezstock/widgets/AppBarWidget.dart';
 import 'package:ezstock/screens/VendidosScreen.dart';
-import 'package:ezstock/screens/HomeScreen.dart';
+import 'package:ezstock/screens/home/HomeScreen.dart';
 import 'package:ezstock/screens/EstoqueScreen.dart';
 
 void main() async {
