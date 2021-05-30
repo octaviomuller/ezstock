@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //TODO: Make all hard coded number relative to screen size
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 12.0, left: 12.0),
+              padding: const EdgeInsets.only(top: 12.0),
               child: MostSold(),
             ),
             Padding(

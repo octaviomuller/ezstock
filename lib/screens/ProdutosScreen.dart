@@ -1,3 +1,4 @@
+import 'package:ezstock/utils/Magic.dart';
 import 'package:ezstock/widgets/ListItem.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,8 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: () => Navigator.pushNamed(),
+        onPressed: () =>
+            Navigator.pushNamed(context, newProductForm, arguments: null),
         child: Icon(Icons.add),
         backgroundColor: Colors.purple.shade700,
       ),

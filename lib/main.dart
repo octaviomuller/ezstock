@@ -1,3 +1,4 @@
+import 'package:ezstock/utils/RouterView.dart';
 import 'package:flutter/material.dart';
 import 'package:ezstock/widgets/AppBarWidget.dart';
 import 'package:ezstock/screens/VendidosScreen.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.purple.shade700),
       home: MyHomePage(),
+      onGenerateRoute: RouterView.generateRoute,
     );
   }
 }
