@@ -9,7 +9,7 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("Estoque"),
+      child: Text("Produtos"),
     );
   }
 }

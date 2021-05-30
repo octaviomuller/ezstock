@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ezstock/widgets/AppBarWidget.dart';
 import 'package:ezstock/screens/VendidosScreen.dart';
 import 'package:ezstock/screens/home/HomeScreen.dart';
-import 'package:ezstock/screens/EstoqueScreen.dart';
+import 'package:ezstock/screens/ProdutosScreen.dart';
 
 void main() async {
   runApp(MyApp());
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark), //TODO: change estoque icon
             title: Title(
-              child: Text("Estoque"), 
+              child: Text("Produtos"),
               color: Colors.blue,
             ),
           ),
