@@ -17,7 +17,7 @@ class CardWithOverlay extends StatelessWidget {
           alignment: AlignmentDirectional.bottomCenter,
           children: [
             Image.asset(
-              'assets/image${random.nextInt(4)}.webp',
+              'assets/image${random.nextInt(9)}.webp',
               height: screenSize.height * (type == "big" ? 0.4 : 0.22),
               width: screenSize.width * (type == "big" ? 0.93 : 0.42),
               fit: BoxFit.cover,
