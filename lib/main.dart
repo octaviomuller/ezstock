@@ -1,3 +1,4 @@
+import 'package:ezstock/SearchCategories.dart';
 import 'package:ezstock/utils/RouterView.dart';
 import 'package:flutter/material.dart';
 import 'package:ezstock/widgets/AppBarWidget.dart';
@@ -28,6 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 1; //tab index
+  bool _isSearching = false;
 
   final tabs = <Widget>[EstoqueScreen(), HomeScreen(), VendidosScreen()];
 
@@ -36,9 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: AppBarWidget(),
+        child: AppBarWidget(
+          setIsSearching: _setIsSearching,
+        ),
       ),
-      body: tabs[_currentIndex],
+      body: _isSearching ? SearchCategories() : tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         selectedItemColor: Colors.purple.shade700,
@@ -72,5 +76,13 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
     );
+  }
+
+  void _setIsSearching(bool payload) {
+    setState(() {
+      _isSearching = payload;
+    });
+
+    print("isSearching $_isSearching");
   }
 }

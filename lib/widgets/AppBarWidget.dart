@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends StatefulWidget {
+  final ValueChanged<bool> setIsSearching;
+
+  const AppBarWidget({this.setIsSearching});
+
   @override
   _AppBarWidgetState createState() => _AppBarWidgetState();
 }
@@ -17,9 +21,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           onPressed: () {
             setState(() {
               if (this.btnIcon.icon == Icons.search) {
+                widget.setIsSearching(true);
                 this.btnIcon = Icon(Icons.close);
                 this.appBar = TextField(
-                  autofocus: true,
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -31,8 +35,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   ),
                 );
               } else {
+                widget.setIsSearching(false);
                 this.btnIcon = Icon(Icons.search);
-                this.appBar = Text('Concessionária Paiv');
+                this.appBar = Text('EzStock');
               }
             });
           },
