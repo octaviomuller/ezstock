@@ -29,9 +29,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 1; //tab index
+  int _lastIndex = 1;
   bool _isSearching = false;
 
   final tabs = <Widget>[EstoqueScreen(), HomeScreen(), VendidosScreen()];
+  final categories = SearchCategories();
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
         preferredSize: const Size.fromHeight(60),
         child: AppBarWidget(
           setIsSearching: _setIsSearching,
+          isSearching: _isSearching && (_lastIndex == _currentIndex),
         ),
       ),
-      body: _isSearching ? SearchCategories() : tabs[_currentIndex],
+      body: _isSearching && (_lastIndex == _currentIndex)
+          ? categories
+          : tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         selectedItemColor: Colors.purple.shade700,
@@ -80,6 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _setIsSearching(bool payload) {
     setState(() {
+      if (payload) {
+        _lastIndex = _currentIndex;
+      }
       _isSearching = payload;
     });
   }
