@@ -11,8 +11,8 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
-    return Center(
-      child: GridView.count(
+    return Scaffold(
+      body: GridView.count(
         primary: false,
         padding: const EdgeInsets.only(top: 12.0, right: 10.0, left: 10.0),
         crossAxisSpacing: 10,
@@ -32,6 +32,11 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
           ListItem(),
           ListItem(),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        // onPressed: () => Navigator.pushNamed(),
+        child: Icon(Icons.add),
+        backgroundColor: Colors.purple.shade700,
       ),
     );
   }
