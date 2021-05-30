@@ -1,4 +1,4 @@
-import 'package:ezstock/SearchCategories.dart';
+import 'package:ezstock/screens/search/SearchCategories.dart';
 import 'package:ezstock/utils/RouterView.dart';
 import 'package:flutter/material.dart';
 import 'package:ezstock/widgets/AppBarWidget.dart';
@@ -82,7 +82,5 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _isSearching = payload;
     });
-
-    print("isSearching $_isSearching");
   }
 }

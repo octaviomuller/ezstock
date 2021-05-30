@@ -27,9 +27,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   style: TextStyle(
                     color: Colors.white,
                   ),
-                  cursorColor: Colors.white,
                   decoration: InputDecoration(
+                    fillColor: Colors.white,
                     focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    border: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
