@@ -53,23 +53,54 @@ class _InfoScreenState extends State<InfoScreen> {
                   clipBehavior: Clip.hardEdge,
                 ),
                 Padding(
-                    padding: EdgeInsets.all(10.00),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AtributoInfo('Preço', 'R\$ ' + '69,99'),
-                        Divider(color: Colors.grey),
-                        AtributoInfo('Em estoque', '18' + ' unidades'),
-                        Divider(color: Colors.grey),
-                        AtributoInfo('Vendidos', '3' + ' unidades'),
-                        Divider(color: Colors.grey),
-                        AtributoInfo('Categoria', 'Moletom'),
-                        Divider(color: Colors.grey),
-                        AtributoInfo('Peça nova', 'Sim'),
-                        Divider(color: Colors.grey),
-                        AtributoInfo('Tamanhos', 'P, M, G'),
-                      ],
-                    )),
+                  padding: EdgeInsets.all(10.00),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AtributoInfo('Preço', 'R\$ ' + '69,99'),
+                      Divider(color: Colors.grey),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Em estoque',
+                              style: TextStyle(
+                                  fontSize: screenSize.height * 0.022,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              '18' + ' unidades',
+                              style: TextStyle(
+                                  fontSize: screenSize.height * 0.022,
+                                  color: Colors.black),
+                            ),
+                          ),
+                          Expanded(
+                              flex: 1,
+                              child: GestureDetector(
+                                onTap: () {
+                                  addToStockDialog(context);
+                                },
+                                child: Icon(Icons.add),
+                              )),
+                        ],
+                      ),
+                      Divider(color: Colors.grey),
+                      AtributoInfo('Vendidos', '3' + ' unidades'),
+                      Divider(color: Colors.grey),
+                      AtributoInfo('Categoria', 'Moletom'),
+                      Divider(color: Colors.grey),
+                      AtributoInfo('Peça nova', 'Sim'),
+                      Divider(color: Colors.grey),
+                      AtributoInfo('Tamanhos', 'P, M, G'),
+                    ],
+                  ),
+                ),
               ],
             ),
           )),
@@ -135,11 +166,89 @@ class _InfoScreenState extends State<InfoScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             IconButton(
+                              onPressed: counter >= 2
+                                  ? () {
+                                      setState(() {
+                                        counter--;
+                                      });
+                                    }
+                                  : null,
+                              icon: Icon(Icons.remove),
+                            ),
+                            Text(
+                              '$counter',
+                              style: TextStyle(fontSize: 40),
+                            ),
+                            IconButton(
+                              //TODO: Only allow to sell max the amout in stock
                               onPressed: () {
                                 setState(() {
-                                  counter--;
+                                  counter++;
                                 });
                               },
+                              icon: Icon(Icons.add),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Cancelar'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Sim'),
+                  onPressed: () {
+                    print('marcar $counter como vendidos');
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> addToStockDialog(BuildContext context) async {
+    int counter = 1;
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Adicionar no estoque'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15.0),
+                          child: Text(
+                              'Quantas unidades deseja adicionar ao estoque?'),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(
+                              onPressed: counter >= 2
+                                  ? () {
+                                      setState(() {
+                                        counter--;
+                                      });
+                                    }
+                                  : null,
                               icon: Icon(Icons.remove),
                             ),
                             Text(
@@ -171,8 +280,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 TextButton(
                   child: Text('Sim'),
                   onPressed: () {
-                    print('marcar $counter como vendidos');
-                    Navigator.of(context).pop();
+                    print('adicionar $counter em estoque');
                     Navigator.of(context).pop();
                   },
                 ),
