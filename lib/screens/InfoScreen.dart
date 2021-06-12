@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:ezstock/widgets/AtributoInfo.dart';
+import 'package:ezstock/widgets/ImageCarrousel.dart';
 import 'package:flutter/material.dart';
 import 'package:ezstock/utils/Magic.dart';
 
@@ -44,12 +45,8 @@ class _InfoScreenState extends State<InfoScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ClipRect(
-                  child: Image.asset(
-                    'assets/image${random.nextInt(9)}.webp',
-                    height: screenSize.height * 0.45,
-                    width: screenSize.width,
-                    fit: BoxFit.cover,
-                  ),
+                  child: ImageCarrousel(imgList: itemImages),
+                  // child: ImageCarrousel(imgList: item.images),
                   clipBehavior: Clip.hardEdge,
                 ),
                 Padding(
@@ -58,6 +55,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AtributoInfo('Preço', 'R\$ ' + '69,99'),
+                      // AtributoInfo('Preço', 'R\$ ' + item.preco),
                       Divider(color: Colors.grey),
                       Row(
                         children: [
@@ -75,6 +73,7 @@ class _InfoScreenState extends State<InfoScreen> {
                             flex: 1,
                             child: Text(
                               '18' + ' unidades',
+                              // item.emEstoque + ' unidades',
                               style: TextStyle(
                                   fontSize: screenSize.height * 0.022,
                                   color: Colors.black),
@@ -92,10 +91,13 @@ class _InfoScreenState extends State<InfoScreen> {
                       ),
                       Divider(color: Colors.grey),
                       AtributoInfo('Vendidos', '3' + ' unidades'),
+                      // AtributoInfo('Vendidos', item.vendidos + ' unidades'),
                       Divider(color: Colors.grey),
                       AtributoInfo('Categoria', 'Moletom'),
+                      // AtributoInfo('Categoria', item.categoria),
                       Divider(color: Colors.grey),
                       AtributoInfo('Peça nova', 'Sim'),
+                      // AtributoInfo('Peça nova', item.ehNova ? 'Sim' : 'Não'),
                       Divider(color: Colors.grey),
                       AtributoInfo('Tamanhos', 'P, M, G'),
                     ],
@@ -291,4 +293,11 @@ class _InfoScreenState extends State<InfoScreen> {
       },
     );
   }
+
+  // TODO: remove after api integration 
+  final List<String> itemImages = [
+    'assets/image1.webp',
+    'assets/image2.webp',
+    'assets/image3.webp'
+  ];
 }
