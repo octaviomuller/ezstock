@@ -26,6 +26,7 @@ class _InfoScreenState extends State<InfoScreen> {
       child: Scaffold(
           appBar: AppBar(
             title: Text('Nome do produto'),
+            // title: Text(item.nome),
             actions: [
               IconButton(
                   icon: Icon(Icons.attach_money),
@@ -294,7 +295,7 @@ class _InfoScreenState extends State<InfoScreen> {
     );
   }
 
-  // TODO: remove after api integration 
+  // TODO: remove after api integration
   final List<String> itemImages = [
     'assets/image1.webp',
     'assets/image2.webp',

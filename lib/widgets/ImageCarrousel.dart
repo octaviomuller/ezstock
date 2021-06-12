@@ -41,6 +41,30 @@ class _ImageCarrouselState extends State<ImageCarrousel> {
             ),
             carouselController: _controller,
           ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              color: Colors.black.withOpacity(0.7),
+              width: screenSize.width,
+              height: screenSize.height * 0.04,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  for (int i = 0; i < imageSliders.length && i < 9; i++)
+                    Container(
+                      height: screenSize.height * 0.02,
+                      width: screenSize.width * 0.1,
+                      decoration: BoxDecoration(
+                        color: currentPage == i
+                            ? Colors.white
+                            : Colors.grey.shade600,
+                        shape: BoxShape.circle,
+                      ),
+                    )
+                ],
+              ),
+            ),
+          )
           // Positioned(
           //   bottom: screenSize.height * 0.12,
           //   right: screenSize.width * 0.01,
@@ -79,5 +103,25 @@ class _ImageCarrouselState extends State<ImageCarrousel> {
           ),
         )
         .toList();
+  }
+
+  List<Widget> imageIndicators(Size screenSize) {
+    List<Widget> aux;
+
+    for (int i = 0; i < imageSliders.length; i++) {
+      aux.add(new Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: screenSize.height * 0.02,
+          width: screenSize.width * 0.1,
+          decoration: BoxDecoration(
+            color: currentPage == i ? Colors.white : Colors.blue,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ));
+    }
+
+    return aux;
   }
 }
