@@ -1,3 +1,6 @@
+import 'package:ezstock/models/Product.dart';
+import 'package:ezstock/provider.dart';
+import 'package:ezstock/repositories/ProductRespository.dart';
 import 'package:ezstock/screens/search/SearchCategories.dart';
 import 'package:ezstock/utils/RouterView.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +31,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final ProductRepository _productRepository = ProductRepository();
+
   int _currentIndex = 1; //tab index
   int _lastIndex = 1;
   bool _isSearching = false;
 
   final tabs = <Widget>[EstoqueScreen(), HomeScreen(), VendidosScreen()];
   final categories = SearchCategories();
+  Future<List<Product>> products;
+
+  @override
+  void initState() {
+    products = _productRepository.get();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +57,23 @@ class _MyHomePageState extends State<MyHomePage> {
           isSearching: _isSearching && (_lastIndex == _currentIndex),
         ),
       ),
-      body: _isSearching && (_lastIndex == _currentIndex)
-          ? categories
-          : tabs[_currentIndex],
+      body: FutureBuilder<dynamic>(
+        future: products,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Provider(
+              products: snapshot.data,
+              child: _isSearching && (_lastIndex == _currentIndex)
+                  ? categories
+                  : tabs[_currentIndex],
+            );
+          } else if (snapshot.hasError) {
+            return Center(child: Text("${snapshot.error}"));
+          }
+
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         selectedItemColor: Colors.purple.shade700,
