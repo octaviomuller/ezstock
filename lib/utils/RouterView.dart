@@ -7,6 +7,8 @@ class RouterView {
   // ignore: missing_return
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case homeRouteName:
+        return MaterialPageRoute(builder: (_) => NewProductForm());
       case newProductForm:
         return MaterialPageRoute(builder: (_) => NewProductForm());
       case infoProduct:

@@ -1,12 +1,15 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:ezstock/screens/InfoScreen.dart';
 import 'package:flutter/material.dart';
 
 class CardWithOverlay extends StatelessWidget {
-  CardWithOverlay({this.type});
+  CardWithOverlay({this.type, this.image, this.title, this.vendidos});
   final String type;
-  final Random random = new Random();
+  final File image;
+  final String title;
+  final String vendidos;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +29,8 @@ class CardWithOverlay extends StatelessWidget {
           child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
             children: [
-              Image.asset(
-                'assets/image${random.nextInt(9)}.webp',
+              Image.file(
+                image,
                 height: screenSize.height * (type == "big" ? 0.4 : 0.22),
                 width: screenSize.width * (type == "big" ? 0.93 : 0.42),
                 fit: BoxFit.cover,
@@ -44,7 +47,7 @@ class CardWithOverlay extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Nome da Peça de Roupa',
+                        title,
                         style: TextStyle(
                           fontSize: type == "big" ? 25.0 : 20,
                           fontWeight: FontWeight.w300,
@@ -54,7 +57,7 @@ class CardWithOverlay extends StatelessWidget {
                       ),
                       if (type == "big")
                         Text(
-                          'Vendidos: 14',
+                          'Vendidos: ' + vendidos,
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w300,

@@ -1,12 +1,13 @@
 import 'dart:math';
 
+import 'package:ezstock/controllers/controller.dart';
 import 'package:ezstock/widgets/AtributoInfo.dart';
 import 'package:ezstock/widgets/ImageCarrousel.dart';
 import 'package:flutter/material.dart';
 import 'package:ezstock/utils/Magic.dart';
+import 'package:provider/provider.dart';
 
 class InfoScreen extends StatefulWidget {
-  //TODO: Change to product
   final dynamic item;
 
   InfoScreen({@required this.item});
@@ -16,6 +17,9 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
+  final Controller controller = Controller();
+  int quantity = 0;
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -28,15 +32,31 @@ class _InfoScreenState extends State<InfoScreen> {
             actions: [
               IconButton(
                   icon: Icon(Icons.attach_money),
-                  onPressed: () => sellDialog(context)),
+                  onPressed: () async {
+                    await sellDialog(context);
+                    try {
+                      await controller.postSell(widget.item.id, quantity);
+                      Navigator.of(context).pop();
+                    } catch (e) {
+                      print(e);
+                    }
+                  }),
               IconButton(
                 icon: Icon(Icons.edit),
                 onPressed: () => Navigator.pushNamed(context, newProductForm,
                     arguments: null),
               ),
               IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => _mostrarDialogoDeletar(context))
+                icon: Icon(Icons.delete),
+                onPressed: () async {
+                  try {
+                    await controller.deleteStock(widget.item.id);
+                  } catch (e) {
+                    print(e);
+                  }
+                  Navigator.of(context).pushNamed('/');
+                },
+              ),
             ],
           ),
           body: SingleChildScrollView(
@@ -53,7 +73,8 @@ class _InfoScreenState extends State<InfoScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AtributoInfo('Preço', 'R\$ ' + widget.item.product.price.toString()),
+                      AtributoInfo('Preço',
+                          'R\$ ' + widget.item.product.price.toString()),
                       // AtributoInfo('Preço', 'R\$ ' + item.preco),
                       Divider(color: Colors.grey),
                       Row(
@@ -93,7 +114,8 @@ class _InfoScreenState extends State<InfoScreen> {
                       AtributoInfo('Categoria', widget.item.product.category),
                       // AtributoInfo('Categoria', item.categoria),
                       Divider(color: Colors.grey),
-                      AtributoInfo('Peça nova', widget.item.product.used ? 'Sim': 'Não'),
+                      AtributoInfo('Peça nova',
+                          widget.item.product.used ? 'Sim' : 'Não'),
                       // AtributoInfo('Peça nova', item.ehNova ? 'Sim' : 'Não'),
                       Divider(color: Colors.grey),
                       AtributoInfo('Tamanho', widget.item.product.size),
@@ -124,8 +146,13 @@ class _InfoScreenState extends State<InfoScreen> {
             TextButton(
               child: Text('Sim'),
               onPressed: () {
-                print('Delete');
-                Navigator.of(context).pop();
+                try {
+                  Provider.of<Controller>(context, listen: false)
+                      .deleteStock(widget.item.id);
+                  Navigator.of(context).pop();
+                } catch (e) {
+                  print(e);
+                }
                 Navigator.of(context).pop();
               },
             ),
@@ -142,7 +169,6 @@ class _InfoScreenState extends State<InfoScreen> {
   }
 
   Future<void> sellDialog(BuildContext context) async {
-    int counter = 1;
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -165,24 +191,24 @@ class _InfoScreenState extends State<InfoScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             IconButton(
-                              onPressed: counter >= 2
+                              onPressed: quantity >= 2
                                   ? () {
                                       setState(() {
-                                        counter--;
+                                        quantity--;
                                       });
                                     }
                                   : null,
                               icon: Icon(Icons.remove),
                             ),
                             Text(
-                              '$counter',
+                              '$quantity',
                               style: TextStyle(fontSize: 40),
                             ),
                             IconButton(
                               //TODO: Only allow to sell max the amout in stock
                               onPressed: () {
                                 setState(() {
-                                  counter++;
+                                  quantity++;
                                 });
                               },
                               icon: Icon(Icons.add),
@@ -204,7 +230,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 TextButton(
                   child: Text('Sim'),
                   onPressed: () {
-                    print('marcar $counter como vendidos');
+                    print('marcar $quantity como vendidos');
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   },

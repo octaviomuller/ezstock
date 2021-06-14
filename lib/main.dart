@@ -1,8 +1,4 @@
-import 'package:ezstock/models/Sell.dart';
-import 'package:ezstock/models/Stock.dart';
-import 'package:ezstock/provider.dart';
-import 'package:ezstock/repositories/SellRespository.dart';
-import 'package:ezstock/repositories/StockRepository.dart';
+import 'package:ezstock/controllers/controller.dart';
 import 'package:ezstock/screens/search/SearchCategories.dart';
 import 'package:ezstock/utils/RouterView.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +6,7 @@ import 'package:ezstock/widgets/AppBarWidget.dart';
 import 'package:ezstock/screens/VendidosScreen.dart';
 import 'package:ezstock/screens/home/HomeScreen.dart';
 import 'package:ezstock/screens/ProdutosScreen.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   runApp(MyApp());
@@ -33,22 +30,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final StockRepository _stockRepository = StockRepository();
-  final SellRepository _sellRepository = SellRepository();
-
   int _currentIndex = 1; //tab index
   int _lastIndex = 1;
   bool _isSearching = false;
 
   final tabs = <Widget>[EstoqueScreen(), HomeScreen(), VendidosScreen()];
   final categories = SearchCategories();
-  List<Stock> stocks;
-  List<Sell> sells;
 
   @override
   void initState() {
-    _stockRepository.get().then((value) => stocks = value);
-    _sellRepository.get().then((value) => sells = value);
+    _currentIndex = 1;
     super.initState();
   }
 
@@ -62,39 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
           isSearching: _isSearching && (_lastIndex == _currentIndex),
         ),
       ),
-      body: Provider(
-        stocks: stocks,
-        sells: sells,
-        child: Builder(
-          builder: (BuildContext innerContext) {
-            return _isSearching && (_lastIndex == _currentIndex)
-                ? categories
-                : tabs[_currentIndex];
-          },
-        ),
+      body: ChangeNotifierProvider(
+        create: (_) => Controller(),
+        child: _isSearching && (_lastIndex == _currentIndex)
+            ? categories
+            : tabs[_currentIndex],
       ),
-      // body: FutureBuilder<dynamic>(
-      //   future: stocks,
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {
-      //       print('snapshot: ' + snapshot.data.toString());
-      //       return Provider(
-      //         stocks: snapshot.data,
-      //         child: Builder(
-      //           builder: (BuildContext innerContext) {
-      //             return _isSearching && (_lastIndex == _currentIndex)
-      //                 ? categories
-      //                 : tabs[_currentIndex];
-      //           },
-      //         ),
-      //       );
-      //     } else if (snapshot.hasError) {
-      //       return Center(child: Text("${snapshot.error}"));
-      //     }
-
-      //     return Center(child: CircularProgressIndicator());
-      //   },
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         selectedItemColor: Colors.purple.shade700,

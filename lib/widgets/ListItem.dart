@@ -46,7 +46,7 @@ class ListItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              element.quantity.toString(),
+              'Quantidade: ' + element.quantity.toString(),
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: screenSize.height * 0.02,

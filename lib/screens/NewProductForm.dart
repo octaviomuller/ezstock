@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ezstock/repositories/StockRepository.dart';
+import 'package:ezstock/controllers/controller.dart';
 import 'package:ezstock/widgets/ImageCarrousel.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,8 +11,6 @@ class NewProductForm extends StatefulWidget {
 }
 
 class _NewProductFormState extends State<NewProductForm> {
-  final StockRepository stockRepository = StockRepository();
-
   bool isNew = false;
   int quantity = 0;
   String category = "Calça";
@@ -20,6 +18,8 @@ class _NewProductFormState extends State<NewProductForm> {
   final codeController = TextEditingController();
   final priceController = TextEditingController();
   final sizeController = TextEditingController();
+
+  final Controller controller = Controller();
 
   List<File> image = [];
   final picker = ImagePicker();
@@ -57,7 +57,30 @@ class _NewProductFormState extends State<NewProductForm> {
     };
 
     try {
-      await stockRepository.post(payload);
+      await controller.postStock(payload);
+    } catch (e) {
+      print(e);
+    } finally {
+      Navigator.of(context).pushNamed('/');
+    }
+  }
+
+  void putStock(BuildContext context) async {
+    await sellDialog(context);
+
+    Map<String, dynamic> payload = {
+      "quantidade": quantity,
+      "nome": nameController.text,
+      "codigoProduto": codeController.text,
+      "categoria": category,
+      "preco": double.parse(priceController.text),
+      "tamanho": sizeController.text,
+      "ehUsado": isNew,
+      "imagens": imageStrings()
+    };
+
+    try {
+      await controller.postStock(payload);
       Navigator.of(context).pop();
     } catch (e) {
       print(e);
@@ -83,7 +106,7 @@ class _NewProductFormState extends State<NewProductForm> {
         actions: [
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: () => postStock(context),
+            onPressed: () async => await postStock(context),
           ),
         ],
       ),
@@ -323,7 +346,6 @@ class _NewProductFormState extends State<NewProductForm> {
                   child: Text('Sim'),
                   onPressed: () {
                     print('marcar $quantity como vendidos');
-                    Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   },
                 ),
