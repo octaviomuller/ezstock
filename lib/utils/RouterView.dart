@@ -10,6 +10,7 @@ class RouterView {
       case newProductForm:
         return MaterialPageRoute(builder: (_) => NewProductForm());
       case infoProduct:
+      // ignore: missing_required_param
         return MaterialPageRoute(builder: (_) => InfoScreen());
     }
   }
