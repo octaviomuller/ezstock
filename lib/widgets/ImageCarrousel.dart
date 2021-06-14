@@ -25,6 +25,7 @@ class _ImageCarrouselState extends State<ImageCarrousel> {
     buildList(screenSize);
 
     return Container(
+      height: screenSize.height * 0.35,
       child: Stack(
         children: <Widget>[
           CarouselSlider(
@@ -87,18 +88,11 @@ class _ImageCarrouselState extends State<ImageCarrousel> {
         .map(
           (item) => Container(
             child: Center(
-              // TODO: remove this
-              child: Image.asset(
-                item,
+              child: Image.file(
+                File(item),
                 width: screenSize.width,
                 fit: BoxFit.cover,
               ),
-              // TODO: uncomment under
-              // child: Image.file(
-              //   File(item),
-              //   width: screenSize.width,
-              //   fit: BoxFit.cover,
-              // ),
             ),
           ),
         )

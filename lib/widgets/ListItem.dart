@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ezstock/screens/InfoScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -16,7 +18,7 @@ class ListItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => InfoScreen(item: 'product'),
+            builder: (context) => InfoScreen(item: element),
           ),
         );
       },
@@ -26,8 +28,8 @@ class ListItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.asset(
-                'assets/image${random.nextInt(9)}.webp',
+              child: Image.file(
+                File(element.product.image[0]),
                 height: screenSize.height * (0.23),
                 width: screenSize.height * (0.23),
                 fit: BoxFit.cover,

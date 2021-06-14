@@ -7,7 +7,7 @@ import 'package:ezstock/utils/Magic.dart';
 
 class InfoScreen extends StatefulWidget {
   //TODO: Change to product
-  final String item;
+  final dynamic item;
 
   InfoScreen({@required this.item});
 
@@ -16,8 +16,6 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  final Random random = new Random();
-
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -25,7 +23,7 @@ class _InfoScreenState extends State<InfoScreen> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Nome do produto'),
+            title: Text(widget.item.product.name),
             // title: Text(item.nome),
             actions: [
               IconButton(
@@ -46,7 +44,7 @@ class _InfoScreenState extends State<InfoScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ClipRect(
-                  child: ImageCarrousel(imgList: itemImages),
+                  child: ImageCarrousel(imgList: widget.item.product.image),
                   // child: ImageCarrousel(imgList: item.images),
                   clipBehavior: Clip.hardEdge,
                 ),
@@ -55,7 +53,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AtributoInfo('Preço', 'R\$ ' + '69,99'),
+                      AtributoInfo('Preço', 'R\$ ' + widget.item.product.price.toString()),
                       // AtributoInfo('Preço', 'R\$ ' + item.preco),
                       Divider(color: Colors.grey),
                       Row(
@@ -73,7 +71,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           Expanded(
                             flex: 1,
                             child: Text(
-                              '18' + ' unidades',
+                              widget.item.quantity.toString() + ' unidades',
                               // item.emEstoque + ' unidades',
                               style: TextStyle(
                                   fontSize: screenSize.height * 0.022,
@@ -90,17 +88,15 @@ class _InfoScreenState extends State<InfoScreen> {
                               )),
                         ],
                       ),
-                      Divider(color: Colors.grey),
-                      AtributoInfo('Vendidos', '3' + ' unidades'),
                       // AtributoInfo('Vendidos', item.vendidos + ' unidades'),
                       Divider(color: Colors.grey),
-                      AtributoInfo('Categoria', 'Moletom'),
+                      AtributoInfo('Categoria', widget.item.product.category),
                       // AtributoInfo('Categoria', item.categoria),
                       Divider(color: Colors.grey),
-                      AtributoInfo('Peça nova', 'Sim'),
+                      AtributoInfo('Peça nova', widget.item.product.used ? 'Sim': 'Não'),
                       // AtributoInfo('Peça nova', item.ehNova ? 'Sim' : 'Não'),
                       Divider(color: Colors.grey),
-                      AtributoInfo('Tamanhos', 'P, M, G'),
+                      AtributoInfo('Tamanho', widget.item.product.size),
                     ],
                   ),
                 ),
@@ -294,11 +290,4 @@ class _InfoScreenState extends State<InfoScreen> {
       },
     );
   }
-
-  // TODO: remove after api integration
-  final List<String> itemImages = [
-    'assets/image1.webp',
-    'assets/image2.webp',
-    'assets/image3.webp'
-  ];
 }

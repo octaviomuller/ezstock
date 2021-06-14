@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Product {
   final int id;
   final String name;
@@ -6,7 +8,7 @@ class Product {
   final double price;
   final String size;
   final bool used;
-  final String image;
+  final List<String> image;
 
   Product(
     this.id,
@@ -20,6 +22,9 @@ class Product {
   );
 
   factory Product.fromJson(Map<String, dynamic> json) {
+    List<String> images = [];
+    json["imagens"].forEach((element) => images.add(element));
+    
     return Product(
       json["id"],
       json["nome"],
@@ -28,7 +33,7 @@ class Product {
       json["preco"],
       json["tamanho"],
       json["ehUsado"],
-      json["imagem"],
+      images,
     );
   }
 }

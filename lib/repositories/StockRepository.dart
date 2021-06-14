@@ -18,4 +18,9 @@ class StockRepository {
     print('producst: ' + stocks.toString());
     return stocks;
   }
+
+  void post(Map<String, dynamic> stock) async {
+    dynamic response = await service.post('estoque', stock);
+    print(response.body);
+  }
 }

@@ -32,7 +32,7 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
         mainAxisSpacing: 10,
         crossAxisCount: 2,
         childAspectRatio:
-            (screenSize.height * (0.13)) / (screenSize.height * (0.32)),
+            (screenSize.height * (0.20)) / (screenSize.height * (0.32)),
         children: getStocksItems(Provider.of(context).stocks),
       ),
       floatingActionButton: FloatingActionButton(
