@@ -3,7 +3,7 @@ import 'package:ezstock/models/Product.dart';
 class Sell {
   final int id;
   final int quantity;
-  final DateTime date;
+  final String date;
   final Product product;
 
   Sell(
@@ -18,7 +18,7 @@ class Sell {
       json["id"],
       json["quantidade"],
       json["dataVenda"],
-      json["produto"],
+      Product.fromJson(json["produto"]),
     );
   }
 }

@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 class Provider extends InheritedWidget {
   const Provider({
     Key key,
-    this.products,
-    // this.stocks,
-    // this.sells,
-    Widget child,
+    // @required this.products,
+    @required this.stocks,
+    @required this.sells,
+    @required Widget child,
   }) : super(key: key, child: child);
 
-  final List<Product> products;
-  // final List<Stock> stocks;
-  // final List<Sell> sells;
+  // final List<Product> products;
+  final List<Stock> stocks;
+  final List<Sell> sells;
 
   static Provider of(BuildContext context) {
     final Provider result = context.dependOnInheritedWidgetOfExactType<Provider>();
@@ -23,5 +23,5 @@ class Provider extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(Provider old) => products != old.products;
+  bool updateShouldNotify(Provider old) => stocks != old.stocks;
 }

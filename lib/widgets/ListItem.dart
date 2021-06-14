@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class ListItem extends StatelessWidget {
+  ListItem(this.element);
+  final dynamic element;
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -22,7 +25,7 @@ class ListItem extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
           ),
           Text(
-            "Nome da peça",
+            element.product.name,
             style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: screenSize.height * 0.03,
@@ -31,7 +34,7 @@ class ListItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            "Em estoque: 10",
+            element.quantity.toString(),
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: screenSize.height * 0.02,
@@ -40,7 +43,7 @@ class ListItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            "R\$89,99",
+            element.product.price.toString(),
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: screenSize.height * 0.028,

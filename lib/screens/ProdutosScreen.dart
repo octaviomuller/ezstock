@@ -1,3 +1,4 @@
+import 'package:ezstock/provider.dart';
 import 'package:ezstock/utils/Magic.dart';
 import 'package:ezstock/utils/Service.dart';
 import 'package:ezstock/widgets/ListItem.dart';
@@ -9,6 +10,16 @@ class EstoqueScreen extends StatefulWidget {
 }
 
 class _EstoqueScreenState extends State<EstoqueScreen> {
+  List<ListItem> getStocksItems(items) {
+    List<ListItem> list = [];
+
+    for(dynamic item in items) {
+      list.add(ListItem(item));
+    }
+
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -22,18 +33,7 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
         crossAxisCount: 2,
         childAspectRatio:
             (screenSize.height * (0.23)) / (screenSize.height * (0.32)),
-        children: [
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-        ],
+        children: getStocksItems(Provider.of(context).stocks),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>

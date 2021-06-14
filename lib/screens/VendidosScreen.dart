@@ -1,3 +1,4 @@
+import 'package:ezstock/provider.dart';
 import 'package:ezstock/widgets/ListItem.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,16 @@ class VendidosScreen extends StatefulWidget {
 }
 
 class _VendidosScreenState extends State<VendidosScreen> {
+  List<ListItem> getSellItems(items) {
+    List<ListItem> list = [];
+
+    for(dynamic item in items) {
+      list.add(ListItem(item));
+    }
+
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -20,18 +31,7 @@ class _VendidosScreenState extends State<VendidosScreen> {
         crossAxisCount: 2,
         childAspectRatio:
             (screenSize.height * (0.23)) / (screenSize.height * (0.32)),
-        children: [
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-        ],
+        children: getSellItems(Provider.of(context).sells),
       ),
     );
   }
